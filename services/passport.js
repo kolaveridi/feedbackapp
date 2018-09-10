@@ -7,6 +7,16 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 const User=mongoose.model('users');
+
+passport.serializeUser((user,done)=>{
+  done(null,user.id);
+});
+passport.deserializeUser((id,done)=>{
+User.findById(id)
+.then(user =>{
+    done(null,user);
+  });
+});
 // //clientId 
 // //clientSecret 
 let googleClientID=keys.googleClientID;
@@ -18,13 +28,27 @@ passport.use(new GoogleStrategy({
     callbackURL: '/auth/google/callback'
 },
 (accessToken,refreshToken,profile,done)=>{
-    new User({
-      googleId:profile.id
-
-    }).save();
-  console.log('a1',accessToken);
-  console.log('a2',refreshToken);
-  console.log('a3',profile);
-  console.log('a4',done);
+    
+  User.findOne({googleId:profile.id})
+  .then((existingUser)=>{
+       if(existingUser){
+       done(null,existingUser);// the first argument null means no error 
+       }
+       else{
+        new User({
+          googleId:profile.id
+    
+        })
+        .save()
+        .then(user=>done(null,users));
+       }
+  })
+  
+  
+  
+  //console.log('a1',accessToken);
+  //console.log('a2',refreshToken);
+  //console.log('a3',profile);
+  //console.log('a4',done);
 })
 );
