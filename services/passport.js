@@ -40,7 +40,7 @@ passport.use(new GoogleStrategy({
     
         })
         .save()
-        .then(user=>done(null,users));
+        .then(user=>done(null,user));
        }
   })
   
