@@ -1,6 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "private":true,
+  "proxy":{
+     "/auth/google":{
+       "target":"http://localhost:5000"
+     }
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
