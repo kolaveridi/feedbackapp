@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter,Route} from 'react-router-dom';
-const Header =()=><h1>Header</h1>;
+import {connect} from 'react-redux';
+import *  as actions from './actions';
+import Header from './components/Header';
 const Dashbaord =()=><h1>Dashbaord</h1>;
 const SurveyNew =()=><h1>SurveyNew</h1>;
 const Landing =()=><h1>Landing</h1>;
 class App extends Component {
+  // instead of componentWillMount
+  componentDidMount(){
+    this.props.fetchUser();
+  }
   render() {
     return (
-      <div className="App">
+      <div className="container">
         <BrowserRouter>
         <div> 
           <Header/>
@@ -24,4 +30,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null,actions)(App);
