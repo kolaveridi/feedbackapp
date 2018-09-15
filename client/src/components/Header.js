@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 class Header extends React.Component{
     renderContent (){
@@ -14,7 +15,7 @@ class Header extends React.Component{
              
          
          default:
-         return <li><a href="">Logout</a></li>;
+         return <li><a href="/api/logout">Logout</a></li>;
 
       }
     }
@@ -24,7 +25,10 @@ class Header extends React.Component{
         <div>
          <nav>
    <div className="nav-wrapper">
-      <a href="#" className="brand-logo center">Emaily</a>
+      <Link 
+         to= {this.props.auth?'/surveys':'/'} 
+         className="brand-logo center">
+      Emaily</Link>
       <ul className="right">
        {this.renderContent()}
       </ul>
