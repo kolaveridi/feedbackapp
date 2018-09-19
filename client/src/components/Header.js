@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import Payments from './Payments';
 import { SSL_OP_CISCO_ANYCONNECT } from 'constants';
 class Header extends React.Component{
-    renderContent (){
-      switch(this.props.auth){
-        case null:
-             return 'Still Deciding';
+  renderContent (){
+    switch(this.props.auth){
+      case null:
+           return 'Still Deciding';
 
-         case false:
-            return (
-              <li> <a href="/auth/google">Login With Google</a></li>
-            );
-             
-         
-         default:
-         return <li><a href="/api/logout">Logout</a></li>;
+       case false:
+          return (
+            <li> <a href="/auth/google">Login With Google</a></li>
+          );
+           
+       
+       default:
+       return <li><a href="/api/logout">Logout</a></li>;
 
-      }
     }
+  }
   render(){
     console.log('this.props',this.props);
+    let authvalue=this.props.auth;
+    console.log('authvalue',authvalue);
       return(
         <div>
          <nav>
@@ -31,9 +34,11 @@ class Header extends React.Component{
       Emaily</Link>
       <ul className="right">
        {this.renderContent()}
+      
       </ul>
     </div>
   </nav>
+    {authvalue===false || authvalue===null?null:<Payments/>}
         </div>
       );
   }
