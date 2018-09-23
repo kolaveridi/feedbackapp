@@ -16,7 +16,13 @@ class Header extends React.Component{
            
        
        default:
-       return <li><a href="/api/logout">Logout</a></li>;
+       return (
+         <div>
+        <li key1="1">Credits:{this.props.auth.credits}</li>
+        <li><a href="/api/logout">Logout</a></li>
+        </div>
+       );
+       
 
     }
   }

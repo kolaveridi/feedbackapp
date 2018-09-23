@@ -1,19 +1,26 @@
 const passport =require('passport');
 const keys=require('../config/keys');
 const stripe=require('stripe')(keys.stripeSecretKey);
+const requireLogin=require('../middlewares/requireLogin');
 //https://stripe.com/docs/api/node#create_charge
-module.exports =app=>{
-   app.post('/api/stripe',(req,res)=>{
-          // console.log(req.body);
-        stripe.charges.create({
-           amount:500,
-           currency:'usd',
-           description:'Emaily payment',
-           source:req.body.id
-        },function(err, charge) {
-            // asynchronously called
-            console.log("charge",charge);
-          });
-     
-   });
+// we can get req.user undefined when tey are not loggedin
+module.exports = app => {
+  app.post('/api/stripe',requireLogin, async (req, res) => {
+    
+    const charge = await stripe.charges.create({
+      amount: 500,
+      currency: 'usd',
+      description: '$5 for 5 credits',
+      source: req.body.id
+    });
+
+  
+    req.user.credits += 5;
+    const user = await req.user.save();
+    res.send(user);
+   
+    
+
+    
+  });
 };
