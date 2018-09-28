@@ -2,6 +2,8 @@
 const mongoose=require('mongoose');
 const requireLogin=require('../middlewares/requireLogin');
 const requireCredits=require('../middlewares/requireCredits');
+const Mailer=require('../services/Mailer');
+const surveyTemplate=require('../services/emailTemplates/surveyTemplate');
 // first login check and then requirecredit check
 const Survey=mongoose.model('surveys');
 module.exports= app =>{
@@ -18,6 +20,11 @@ module.exports= app =>{
     _user: req.user.id,
     dateSent: Date.now()
     });
+    //we send email in this part
+
+    const mailer=new Mailer(survey,surveyTemplate(survey));
+    console.log(mailer);
+    mailer.send();
 
    
   })
