@@ -1,0 +1,22 @@
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+class Dashboard extends React.Component{
+  render(){
+     return(
+        <div>
+            Dashboard
+            <div class="fixed-action-btn">
+            <Link to="/surveys/new" class="btn-floating btn-large red">
+            <i class="large material-icons">add</i>
+            </Link>
+
+            </div>
+            </div>
+
+
+     );
+
+  }
+}
+export default Dashboard;
