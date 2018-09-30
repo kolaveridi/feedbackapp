@@ -4,6 +4,7 @@ import {reduxForm,Field} from 'redux-form';
 import SurveyField from './SurveyField';
 import {Link} from 'react-router-dom';
 import _  from 'lodash';
+import validateEmails from '../../utils/validateEmails';
 const FIELDS=[
  {label:'Survey Title',name:'Title'},
  {label:'Subject Line',name:'subject'},
@@ -88,8 +89,10 @@ function validate(values){
  if(!errors.body){
      errors.body='You must provide a body'
  }
+ console.log("values.emails",values.emails);
+ errors.emails=validateEmails(values.emails || '');
 
-
+ console.log("errors",errors);
 return errors;
 }
 export default  reduxForm({
