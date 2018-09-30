@@ -97,5 +97,6 @@ return errors;
 }
 export default  reduxForm({
     validate:validate,
-    form: 'surveyForm'
+    form: 'surveyForm',
+    destroyOnUnmount:false
 }) (SuveyForm);
