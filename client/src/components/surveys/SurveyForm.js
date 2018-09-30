@@ -58,7 +58,7 @@ class SuveyForm extends React.Component{
     render(){
         return(
           <div>
-              <form onSubmit={this.props.handleSubmit(values=>console.log(values))}>
+              <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
                
                 {this.renderFields()}
                 <div>
@@ -86,7 +86,7 @@ function validate(values){
  {
      errors.subject='You must provide a subject'
  }
- if(!errors.body){
+ if(!values.body){
      errors.body='You must provide a body'
  }
  console.log("values.emails",values.emails);
