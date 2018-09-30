@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {reduxForm,Field} from 'redux-form';
 import SurveyField from './SurveyField';
+import {Link} from 'react-router-dom';
 import _  from 'lodash';
 const FIELDS=[
  {label:'Survey Title',name:'Title'},
@@ -59,14 +60,39 @@ class SuveyForm extends React.Component{
               <form onSubmit={this.props.handleSubmit(values=>console.log(values))}>
                
                 {this.renderFields()}
-              
-               <button type="submit">Submit </button>
+                <div>
+              <Link to="/surveys" className="red btn-flat left white-text">
+                Cancel
+              </Link>
+              </div>
+               <button type="submit" className="teal btn-flat right white-text">
+                Next 
+               <i className="material-icons right">done</i>
+               </button>
                </form>
               </div>
 
         );
     }
 }
+function validate(values){
+ console.log("values",values);
+ const errors={};
+ if(!values.Title){
+     errors.Title='You must provide a value';
+ }
+ if(!values.subject)
+ {
+     errors.subject='You must provide a subject'
+ }
+ if(!errors.body){
+     errors.body='You must provide a body'
+ }
+
+
+return errors;
+}
 export default  reduxForm({
+    validate:validate,
     form: 'surveyForm'
 }) (SuveyForm);
